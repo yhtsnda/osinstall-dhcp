@@ -4,12 +4,13 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	dhcp "github.com/krolaw/dhcp4"
-	"github.com/willf/bitset"
 	"net"
 	"strconv"
 	"strings"
 	"time"
+
+	dhcp "github.com/krolaw/dhcp4"
+	"github.com/willf/bitset"
 )
 
 func convertByteToOptionValue(code dhcp.OptionCode, b []byte) string {
@@ -267,7 +268,8 @@ func convertSubnetToApiSubnet(s *Subnet) *ApiSubnet {
 	apiSubnet.ActiveEnd = s.ActiveEnd.String()
 	apiSubnet.ActiveLeaseTime = int(s.ActiveLeaseTime.Seconds())
 	apiSubnet.ReservedLeaseTime = int(s.ReservedLeaseTime.Seconds())
-
+	apiSubnet.IPXE = s.IPXE
+	apiSubnet.Bootstrap = s.Bootstrap
 	if s.NextServer != nil {
 		ns := s.NextServer.String()
 		apiSubnet.NextServer = &ns
@@ -309,7 +311,8 @@ func convertApiSubnetToSubnet(as *ApiSubnet, subnet *Subnet) (*Subnet, error) {
 	subnet.ActiveLeaseTime = time.Duration(as.ActiveLeaseTime) * time.Second
 	subnet.ReservedLeaseTime = time.Duration(as.ReservedLeaseTime) * time.Second
 	subnet.ActiveBits = bitset.New(uint(dhcp.IPRange(subnet.ActiveStart, subnet.ActiveEnd)))
-
+	subnet.IPXE = as.IPXE
+	subnet.Bootstrap = as.Bootstrap
 	if as.NextServer != nil {
 		ip := net.ParseIP(*as.NextServer).To4()
 		subnet.NextServer = &ip

@@ -1,0 +1,40 @@
+hash: 71fd268ca16db3fc067511ed27612822ec7b79db06ff9f0b611faa82807ab7ea
+updated: 2017-01-04T11:27:23.398051517+08:00
+imports:
+- name: github.com/ant0ine/go-json-rest
+  version: ce4b71cdf7ba29ef443d704bd923f5bbf281ee30
+  subpackages:
+  - rest
+  - rest/trie
+- name: github.com/krolaw/dhcp4
+  version: f61f734b73027e29f7fa2ed623f2ed85a7ef08fa
+- name: github.com/willf/bitset
+  version: 3582df120789e0e260108c11fd01775b30782fa7
+- name: golang.org/x/net
+  version: 69d4b8aa71caaaa75c3dfc11211d1be495abec7c
+  subpackages:
+  - bpf
+  - internal/iana
+  - internal/netreflect
+  - ipv4
+- name: gopkg.in/gcfg.v1
+  version: 27e4946190b4a327b539185f2b5b1f7c84730728
+  subpackages:
+  - scanner
+  - token
+  - types
+- name: gopkg.in/warnings.v0
+  version: 8a331561fe74dadba6edfc59f3be66c22c3b065d
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  subpackages:
+  - assert

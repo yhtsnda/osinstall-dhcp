@@ -1,0 +1,16 @@
+package: github.com/jinlingan/ocb-dhcp
+import:
+- package: github.com/ant0ine/go-json-rest
+  version: ^3.3.2
+  subpackages:
+  - rest
+- package: github.com/krolaw/dhcp4
+- package: github.com/willf/bitset
+  version: ~1.0.0
+- package: gopkg.in/gcfg.v1
+  version: ^1.2.0
+testImport:
+- package: github.com/stretchr/testify
+  version: ~1.1.4
+  subpackages:
+  - assert

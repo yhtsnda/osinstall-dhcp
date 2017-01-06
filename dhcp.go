@@ -141,13 +141,21 @@ func (h *DHCPHandler) ServeDHCP(p dhcp.Packet, msgType dhcp.MessageType, options
 			return dhcp.ReplyPacket(p, dhcp.NAK, h.ip, nil, 0, nil)
 		}
 
+		optionUserClass := string(options[dhcp.OptionUserClass])
 		options, lease_time := subnet.build_options(lease, binding)
 
+		reply_option := subnet.Options.SelectOrderOrAll(options[dhcp.OptionParameterRequestList])
+		if optionUserClass == "iPXE" {
+			reply_option = append(reply_option, dhcp.Option{Code: 67, Value: []byte(subnet.Bootstrap)})
+		} else {
+			reply_option = append(reply_option, dhcp.Option{Code: 67, Value: []byte(subnet.IPXE)})
+		}
 		reply := dhcp.ReplyPacket(p, dhcp.Offer,
 			h.ip,
 			lease.Ip,
 			lease_time,
-			subnet.Options.SelectOrderOrAll(options[dhcp.OptionParameterRequestList]))
+			reply_option)
+
 		log.Println("Discover: Handing out: ", reply.YIAddr(), " to ", reply.CHAddr())
 		return reply
 
@@ -160,6 +168,7 @@ func (h *DHCPHandler) ServeDHCP(p dhcp.Packet, msgType dhcp.MessageType, options
 		if reqIP == nil {
 			reqIP = net.IP(p.CIAddr())
 		}
+		optionUserClass := string(options[dhcp.OptionUserClass])
 
 		if len(reqIP) != 4 || reqIP.Equal(net.IPv4zero) {
 			return dhcp.ReplyPacket(p, dhcp.NAK, h.ip, nil, 0, nil)
@@ -179,11 +188,17 @@ func (h *DHCPHandler) ServeDHCP(p dhcp.Packet, msgType dhcp.MessageType, options
 
 		subnet.update_lease_time(h.info, lease, lease_time)
 
+		reply_option := subnet.Options.SelectOrderOrAll(options[dhcp.OptionParameterRequestList])
+		if optionUserClass == "iPXE" {
+			reply_option = append(reply_option, dhcp.Option{Code: 67, Value: []byte(subnet.Bootstrap)})
+		} else {
+			reply_option = append(reply_option, dhcp.Option{Code: 67, Value: []byte(subnet.IPXE)})
+		}
 		reply := dhcp.ReplyPacket(p, dhcp.ACK,
 			h.ip,
 			lease.Ip,
 			lease_time,
-			subnet.Options.SelectOrderOrAll(options[dhcp.OptionParameterRequestList]))
+			reply_option)
 		if binding != nil && binding.NextServer != nil {
 			reply.SetSIAddr(net.ParseIP(*binding.NextServer))
 		} else if subnet.NextServer != nil {

@@ -21,3 +21,4 @@ curl -X Delete -H 'Content-Type: application/json' --data-binary @./test/bind.js
 # Next server
 curl -X Put -H 'Content-Type: application/json' --data-binary @./test/next_server.json -k https://admin:admin@127.0.0.1:6755/subnets/192.168.124.0/next_server/192.168.124.22
 
+sudo /bin/launchctl unload -w /System/Library/LaunchDaemons/bootps.plist

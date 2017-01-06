@@ -4,19 +4,20 @@ package main
 import (
 	"encoding/binary"
 	"encoding/json"
-	dhcp "github.com/krolaw/dhcp4"
-	"github.com/willf/bitset"
 	"log"
 	"net"
 	"sync"
 	"time"
+
+	dhcp "github.com/krolaw/dhcp4"
+	"github.com/willf/bitset"
 )
 
 type Subnet struct {
 	lock              sync.RWMutex
 	Name              string
 	Subnet            *MyIPNet
-	NextServer        *net.IP `"json:,omitempty"`
+	NextServer        *net.IP `json:",omitempty"`
 	ActiveStart       net.IP
 	ActiveEnd         net.IP
 	ActiveLeaseTime   time.Duration
@@ -25,6 +26,8 @@ type Subnet struct {
 	Leases            map[string]*Lease
 	Bindings          map[string]*Binding
 	Options           dhcp.Options // Options to send to DHCP Clients
+	IPXE              string       `json:"ipxe"`
+	Bootstrap         string       `json:"bootstrap"`
 }
 
 func NewSubnet() *Subnet {

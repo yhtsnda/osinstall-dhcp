@@ -29,3 +29,6 @@ src
 database.json
 coverage.html
 cover.out
+vendor/
+target/
+ocb-dhcp

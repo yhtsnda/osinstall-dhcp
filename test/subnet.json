@@ -1,12 +1,12 @@
 {
-  "name": "192.168.124.0",
-  "subnet": "192.168.124.0/24",
-  "active_start": "192.168.124.22",
-  "active_end": "192.168.124.92",
+  "name": "192.168.173.0",
+  "subnet": "192.168.173.0/24",
+  "active_start": "192.168.173.10",
+  "active_end": "192.168.173.20",
+  "next_server":"192.168.173.129",
+  "ipxe" : "undionly.kpxe",
+  "bootstrap" :"bootstrap.ipxe",
   "options": [
-    { "id": 3, "value": "192.168.124.1" },
-    { "id": 15, "value": "alneode.com" },
-    { "id": 6, "value": "192.168.124.10" },
-    { "id": 67, "value": "discovery/pxelinux.0" }
+    { "id": 3, "value": "192.168.173.1" }
   ]
 }

@@ -32,6 +32,8 @@ type ApiSubnet struct {
 	Leases            []*Lease   `json:"leases,omitempty"`
 	Bindings          []*Binding `json:"bindings,omitempty"`
 	Options           []*Option  `json:"options,omitempty"`
+	IPXE              string     `json:"ipxe"`
+	Bootstrap         string     `json:"bootstrap"`
 }
 
 // Option id number from DHCP RFC 2132 and 2131

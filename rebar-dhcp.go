@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
+	"path/filepath"
 
 	"gopkg.in/gcfg.v1"
 )
@@ -20,11 +22,19 @@ var config_path, key_pem, cert_pem, data_dir string
 var server_ip string
 
 func init() {
-	flag.StringVar(&config_path, "config_path", "/etc/rebar-dhcp.conf", "Path to config file")
-	flag.StringVar(&key_pem, "key_pem", "/etc/dhcp-https-key.pem", "Path to key file")
-	flag.StringVar(&cert_pem, "cert_pem", "/etc/dhcp-https-cert.pem", "Path to cert file")
-	flag.StringVar(&data_dir, "data_dir", "/var/cache/rebar-dhcp", "Path to store data")
+	// path := os.Executable()
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(-1)
+	}
+	// fmt.Println(dir)
+	flag.StringVar(&config_path, "config_path", dir+"/config/config.cfg", "Path to config file")
+	flag.StringVar(&key_pem, "key_pem", "", "Path to key file")
+	flag.StringVar(&cert_pem, "cert_pem", "", "Path to cert file")
+	flag.StringVar(&data_dir, "data_dir", dir+"/date", "Path to store data")
 	flag.StringVar(&server_ip, "server_ip", "", "Server IP to return in packets (e.g. 10.10.10.1/24)")
+	flag.StringVar(&server_ip, "s", "", "Server IP to return in packets (e.g. 10.10.10.1/24)")
 	flag.BoolVar(&ignore_anonymus, "ignore_anonymus", false, "Ignore unknown MAC addresses")
 }
 
