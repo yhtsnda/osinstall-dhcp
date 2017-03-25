@@ -9,7 +9,7 @@ pack:
 	rm -rf ./target
 	mkdir ./target
 	cp -R ./config ./target
-	cp -R ./date ./target
+	cp -R ./data ./target
 	cp ./ocb-dhcp ./target
 
 pack_linux:
@@ -17,7 +17,7 @@ pack_linux:
 	rm -rf ./target
 	mkdir ./target
 	cp -R ./config ./target
-	cp -R ./date ./target
+	cp -R ./data ./target
 	cp ./ocb-dhcp ./target
 
 pack_mac:
@@ -25,5 +25,5 @@ pack_mac:
 		rm -rf ./target
 		mkdir ./target
 		cp -R ./config ./target
-		cp -R ./date ./target
+		cp -R ./data ./target
 		cp ./ocb-dhcp ./target

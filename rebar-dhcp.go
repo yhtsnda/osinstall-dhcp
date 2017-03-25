@@ -20,6 +20,7 @@ type Config struct {
 var ignore_anonymus bool
 var config_path, key_pem, cert_pem, data_dir string
 var server_ip string
+var net_name string
 
 func init() {
 	// path := os.Executable()
@@ -32,9 +33,11 @@ func init() {
 	flag.StringVar(&config_path, "config_path", dir+"/config/config.cfg", "Path to config file")
 	flag.StringVar(&key_pem, "key_pem", "", "Path to key file")
 	flag.StringVar(&cert_pem, "cert_pem", "", "Path to cert file")
-	flag.StringVar(&data_dir, "data_dir", dir+"/date", "Path to store data")
-	flag.StringVar(&server_ip, "server_ip", "", "Server IP to return in packets (e.g. 10.10.10.1/24)")
-	flag.StringVar(&server_ip, "s", "", "Server IP to return in packets (e.g. 10.10.10.1/24)")
+	flag.StringVar(&data_dir, "data_dir", dir+"/data", "Path to store data")
+	// flag.StringVar(&server_ip, "server_ip", "", "Server IP to return in packets (e.g. 10.10.10.1/24)")
+	// flag.StringVar(&server_ip, "s", "", "Server IP to return in packets (e.g. 10.10.10.1/24)")
+	flag.StringVar(&net_name, "n", "eth0", "the network interface name default is 'eth0'")
+	flag.StringVar(&net_name, "net", "eth0", "the network interface name default is 'eth0'")
 	flag.BoolVar(&ignore_anonymus, "ignore_anonymus", false, "Ignore unknown MAC addresses")
 }
 
@@ -53,7 +56,7 @@ func main() {
 
 	fe := NewFrontend(cert_pem, key_pem, cfg, fs)
 
-	if err := StartDhcpHandlers(fe.DhcpInfo, server_ip); err != nil {
+	if err := StartDhcpHandlers(fe.DhcpInfo, net_name); err != nil {
 		log.Fatal(err)
 	}
 	fe.RunServer(true)

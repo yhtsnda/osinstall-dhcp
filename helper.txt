@@ -22,3 +22,11 @@ curl -X Delete -H 'Content-Type: application/json' --data-binary @./test/bind.js
 curl -X Put -H 'Content-Type: application/json' --data-binary @./test/next_server.json -k https://admin:admin@127.0.0.1:6755/subnets/192.168.124.0/next_server/192.168.124.22
 
 sudo /bin/launchctl unload -w /System/Library/LaunchDaemons/bootps.plist
+
+
+curl -X Put -H 'Content-Type: application/json' --data-binary @./next_server.json -k http://admin:admin@192.168.173.129:6755/subnets/192.168.173.0/next_server/192.168.124.173
+
+curl -X Put -H 'Content-Type: application/json' --data-binary @./subnet.json -k http://admin:admin@192.168.173.129:6755/subnets/192.168.173.0
+
+
+curl -X Post -H 'Content-Type: application/json' --data-binary @./subnet.json -k http://admin:admin@192.168.173.129:6755/subnets

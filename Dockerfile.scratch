@@ -1,0 +1,7 @@
+#FROM debian:jessie
+FROM scratch
+ADD  osinstall-dhcp /dhcp/
+#RUN mkdir -p /dhcp/config /dhcp/data
+ADD  ./config/config.cfg /dhcp/config/config.cfg
+ADD  ./data/database.json /dhcp/data/database.json
+CMD ["/dhcp/osinstall-dhcp", "-n", "eth0"]

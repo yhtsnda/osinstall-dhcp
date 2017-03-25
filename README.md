@@ -1,3 +1,8 @@
+#停止 mac 的 boot 服务
+
+sudo /bin/launchctl unload -w /System/Library/LaunchDaemons/bootps.plist
+
+
 # rebar-dhcp
 
 This is a Simple DHCP server that provides enough for what DigitalRebar
@@ -90,7 +95,7 @@ Returns: a json subnet object like the element in the list with leases
 Errors: 404 if not found.
 
 The subnet object containes leases (dynamic information), bindings
-(config-based info about devices), and options that should be used 
+(config-based info about devices), and options that should be used
 for nodes in the subnet.
 
 The id of an Option is the number from the RFC2132 or follow-on ones.
@@ -236,7 +241,7 @@ To run the unit tests:
 To get coverage:
 
 * go test -coverprofile=cover.out
-* sed -i -e "s#.*/\(.*\.go\)#\./\\1#" cover.out 
+* sed -i -e "s#.*/\(.*\.go\)#\./\\1#" cover.out
 * go tool cover -html=cover.out -o coverage.html
 
 # Running
@@ -257,4 +262,3 @@ password = admin
 ```
 
 The network section specifies the parameters for the API endpoint.  Access creds and listening port can be specifed.
-

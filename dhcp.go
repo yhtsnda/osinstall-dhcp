@@ -4,7 +4,6 @@ package main
 import (
 	"log"
 	"net"
-	"strings"
 
 	dhcp "github.com/krolaw/dhcp4"
 )
@@ -22,19 +21,13 @@ func RunDhcpHandler(dhcpInfo *DataTracker, intf net.Interface, myIp string) {
 	log.Fatal(dhcp.ListenAndServeIf(intf.Name, handler))
 }
 
-func StartDhcpHandlers(dhcpInfo *DataTracker, serverIp string) error {
+func StartDhcpHandlers(dhcpInfo *DataTracker, net_name string) error {
 	intfs, err := net.Interfaces()
 	if err != nil {
 		return err
 	}
 	for _, intf := range intfs {
-		if (intf.Flags & net.FlagLoopback) == net.FlagLoopback {
-			continue
-		}
-		if (intf.Flags & net.FlagUp) != net.FlagUp {
-			continue
-		}
-		if strings.HasPrefix(intf.Name, "veth") {
+		if intf.Name != net_name {
 			continue
 		}
 		var sip string
@@ -54,10 +47,9 @@ func StartDhcpHandlers(dhcpInfo *DataTracker, serverIp string) error {
 				continue
 			}
 
-			if serverIp != "" && serverIp == addr.String() {
-				sip = addr.String()
-				break
-			}
+			sip = addr.String()
+			break
+
 		}
 
 		if sip == "" {
